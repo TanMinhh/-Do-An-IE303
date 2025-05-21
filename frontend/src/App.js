@@ -17,7 +17,7 @@ import EditBookingPage from './component/admin/EditBookingPage';
 import ProfilePage from './component/profile/ProfilePage';
 import EditProfilePage from './component/profile/EditProfilePage';
 import { ProtectedRoute, AdminRoute } from './service/guard';
-
+import ManageUsersPage from './component/admin/ManageUserPage';
 function App() {
   return (
     <BrowserRouter>
@@ -62,7 +62,9 @@ function App() {
             <Route path="/admin/edit-booking/:bookingCode"
               element={<AdminRoute element={<EditBookingPage />} />}
             />
-
+            <Route path="/admin/manage-users"
+  element={<AdminRoute element={<ManageUsersPage />} />}
+/>
             {/* Fallback Route */}
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>

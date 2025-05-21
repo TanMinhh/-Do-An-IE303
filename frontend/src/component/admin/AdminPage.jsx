@@ -19,10 +19,10 @@ const AdminPage = () => {
         fetchAdminName();
     }, []);
 
-    // const handleLogout = () => {
-    //     localStorage.removeItem("token");
-    //     navigate("/login");
-    // };
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
 
     return (
         <div className="admin-page ">

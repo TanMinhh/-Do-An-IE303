@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 import Pagination from '../common/Pagination';
 import RoomResult from '../common/RoomResult';
-
+import './ManageRoomPage.css'
 const ManageRoomPage = () => {
   const [rooms, setRooms] = useState([]);
   const [filteredRooms, setFilteredRooms] = useState([]);
@@ -62,7 +62,7 @@ const ManageRoomPage = () => {
   return (
     <div className='all-rooms'>
       <h2>All Rooms</h2>
-      <div className='all-room-filter-div' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className='all-room-filter-div' >
         <div className='filter-select-div'>
           <label>Filter by Room Type:</label>
           <select value={selectedRoomType} onChange={handleRoomTypeChange}>
