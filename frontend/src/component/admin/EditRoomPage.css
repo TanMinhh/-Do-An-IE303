@@ -43,11 +43,20 @@
   cursor: pointer;
   font-weight: bold;
 }
-
-.update-button {
-  background-color: #3b82f6;
+.update-button ,
+.delete-button{
+  background-color: #22c55e;
   color: white;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 30px auto;
+  margin-top: 10px ;
 }
+
 
 .delete-button {
   background-color: #ef4444;

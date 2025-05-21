@@ -13,15 +13,18 @@ const ManageBookingsPage = () => {
 
     useEffect(() => {
         const fetchBookings = async () => {
-            try {
-                const response = await ApiService.getAllBookings();
-                const allBookings = response.bookingList;
-                setBookings(allBookings);
-                setFilteredBookings(allBookings);
-            } catch (error) {
-                console.error('Error fetching bookings:', error.message);
-            }
-        };
+  try {
+    const response = await ApiService.getAllBookings();
+    console.log(response); // Đây sẽ log ra cả axios response object
+
+    // Đúng chuẩn phải lấy response.data.bookingList
+    const allBookings = response.data.bookingList;
+    setBookings(allBookings);
+    setFilteredBookings(allBookings);
+  } catch (error) {
+    console.error('Error fetching bookings:', error.message);
+  }
+};
 
         fetchBookings();
     }, []);

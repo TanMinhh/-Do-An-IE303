@@ -66,12 +66,12 @@ const ManageUserPage = () => {
         <tbody>
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user) => (
-              <tr key={user._id}>
+              <tr key={user.id}>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                  <button className="delete-button" onClick={() => handleDelete(user._id)}>Delete</button>
+                  <button className="delete-button" onClick={() => handleDelete(user.id)}>Delete</button>
                 </td>
               </tr>
             ))

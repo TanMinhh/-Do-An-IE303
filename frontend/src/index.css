@@ -765,7 +765,8 @@ p {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 100px;
+
 }
 
 .book-now-button:hover,
