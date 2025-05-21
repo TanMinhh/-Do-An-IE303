@@ -11,6 +11,7 @@ const ManageRoomPage = () => {
   const [selectedRoomType, setSelectedRoomType] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [roomsPerPage] = useState(5);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +23,8 @@ const ManageRoomPage = () => {
         setFilteredRooms(allRooms);
       } catch (error) {
         console.error('Error fetching rooms:', error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -39,26 +42,21 @@ const ManageRoomPage = () => {
   }, []);
 
   const handleRoomTypeChange = (e) => {
-    setSelectedRoomType(e.target.value);
-    filterRooms(e.target.value);
+    const type = e.target.value;
+    setSelectedRoomType(type);
+    filterRooms(type);
   };
 
   const filterRooms = (type) => {
-    if (type === '') {
-      setFilteredRooms(rooms);
-    } else {
-      const filtered = rooms.filter((room) => room.roomType === type);
-      setFilteredRooms(filtered);
-    }
-    setCurrentPage(1); // Reset to first page after filtering
+    const filtered = type ? rooms.filter(room => room.roomType === type) : rooms;
+    setFilteredRooms(filtered);
+    setCurrentPage(1);
   };
 
-  // Pagination
   const indexOfLastRoom = currentPage * roomsPerPage;
   const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
   const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
 
-  // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -69,7 +67,7 @@ const ManageRoomPage = () => {
           <label>Filter by Room Type:</label>
           <select value={selectedRoomType} onChange={handleRoomTypeChange}>
             <option value="">All</option>
-            {roomTypes.map((type) => (
+            {roomTypes?.length > 0 && roomTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -81,14 +79,19 @@ const ManageRoomPage = () => {
         </div>
       </div>
 
-      <RoomResult roomSearchResults={currentRooms} />
-
-      <Pagination
-        roomsPerPage={roomsPerPage}
-        totalRooms={filteredRooms.length}
-        currentPage={currentPage}
-        paginate={paginate}
-      />
+      {loading ? (
+        <p>Loading rooms...</p>
+      ) : (
+        <>
+          <RoomResult roomSearchResults={currentRooms} />
+          <Pagination
+            roomsPerPage={roomsPerPage}
+            totalRooms={filteredRooms.length}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
+        </>
+      )}
     </div>
   );
 };

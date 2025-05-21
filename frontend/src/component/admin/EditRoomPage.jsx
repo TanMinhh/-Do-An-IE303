@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
-
+import './EditRoomPage.css'
 const EditRoomPage = () => {
     const { roomId } = useParams();
     const navigate = useNavigate();
+
     const [roomDetails, setRoomDetails] = useState({
         roomPhotoUrl: '',
         roomType: '',
         roomPrice: '',
         roomDescription: '',
     });
+
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchRoomDetails = async () => {
@@ -35,8 +38,8 @@ const EditRoomPage = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setRoomDetails(prevState => ({
-            ...prevState,
+        setRoomDetails(prev => ({
+            ...prev,
             [name]: value,
         }));
     };
@@ -52,49 +55,55 @@ const EditRoomPage = () => {
         }
     };
 
-
     const handleUpdate = async () => {
-        try {
-            const formData = new FormData();
-            formData.append('roomType', roomDetails.roomType);
-            formData.append('roomPrice', roomDetails.roomPrice);
-            formData.append('roomDescription', roomDetails.roomDescription);
+        const { roomType, roomPrice, roomDescription } = roomDetails;
 
-            if (file) {
-                formData.append('photo', file);
-            }
+        if (!roomType || !roomPrice || !roomDescription) {
+            setError('All fields are required');
+            setTimeout(() => setError(''), 4000);
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const formData = new FormData();
+            formData.append('roomType', roomType);
+            formData.append('roomPrice', roomPrice);
+            formData.append('roomDescription', roomDescription);
+
+            if (file) formData.append('photo', file);
 
             const result = await ApiService.updateRoom(roomId, formData);
             if (result.statusCode === 200) {
                 setSuccess('Room updated successfully.');
-                
                 setTimeout(() => {
                     setSuccess('');
                     navigate('/admin/manage-rooms');
-                }, 3000);
+                }, 2000);
             }
-            setTimeout(() => setSuccess(''), 5000);
         } catch (error) {
             setError(error.response?.data?.message || error.message);
-            setTimeout(() => setError(''), 5000);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleDelete = async () => {
-        if (window.confirm('Do you want to delete this room?')) {
+        if (window.confirm('Are you sure you want to delete this room?')) {
             try {
+                setLoading(true);
                 const result = await ApiService.deleteRoom(roomId);
                 if (result.statusCode === 200) {
-                    setSuccess('Room Deleted successfully.');
-                    
+                    setSuccess('Room deleted successfully.');
                     setTimeout(() => {
                         setSuccess('');
                         navigate('/admin/manage-rooms');
-                    }, 3000);
+                    }, 2000);
                 }
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
-                setTimeout(() => setError(''), 5000);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -104,21 +113,19 @@ const EditRoomPage = () => {
             <h2>Edit Room</h2>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}
+
             <div className="edit-room-form">
                 <div className="form-group">
                     {preview ? (
-                        <img src={preview} alt="Room Preview" className="room-photo-preview" />
+                        <img src={preview} alt="Preview" className="room-photo-preview" />
                     ) : (
                         roomDetails.roomPhotoUrl && (
                             <img src={roomDetails.roomPhotoUrl} alt="Room" className="room-photo" />
                         )
                     )}
-                    <input
-                        type="file"
-                        name="roomPhoto"
-                        onChange={handleFileChange}
-                    />
+                    <input type="file" onChange={handleFileChange} />
                 </div>
+
                 <div className="form-group">
                     <label>Room Type</label>
                     <input
@@ -128,15 +135,17 @@ const EditRoomPage = () => {
                         onChange={handleChange}
                     />
                 </div>
+
                 <div className="form-group">
                     <label>Room Price</label>
                     <input
-                        type="text"
+                        type="number"
                         name="roomPrice"
                         value={roomDetails.roomPrice}
                         onChange={handleChange}
                     />
                 </div>
+
                 <div className="form-group">
                     <label>Room Description</label>
                     <textarea
@@ -145,8 +154,13 @@ const EditRoomPage = () => {
                         onChange={handleChange}
                     ></textarea>
                 </div>
-                <button className="update-button" onClick={handleUpdate}>Update Room</button>
-                <button className="delete-button" onClick={handleDelete}>Delete Room</button>
+
+                <button className="update-button" onClick={handleUpdate} disabled={loading}>
+                    {loading ? 'Updating...' : 'Update Room'}
+                </button>
+                <button className="delete-button" onClick={handleDelete} disabled={loading}>
+                    {loading ? 'Deleting...' : 'Delete Room'}
+                </button>
             </div>
         </div>
     );

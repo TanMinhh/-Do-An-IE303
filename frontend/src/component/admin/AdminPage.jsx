@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from '../../service/ApiService';
-
+    import './AdminPage.css';
 const AdminPage = () => {
     const [adminName, setAdminName] = useState('');
     const navigate = useNavigate();
@@ -19,19 +19,30 @@ const AdminPage = () => {
         fetchAdminName();
     }, []);
 
+    // const handleLogout = () => {
+    //     localStorage.removeItem("token");
+    //     navigate("/login");
+    // };
+
     return (
-        <div className="admin-page">
-            <h1 className="welcome-message">Welcome, {adminName}</h1>
-            <div className="admin-actions">
-                <button className="admin-button" onClick={() => navigate('/admin/manage-rooms')}>
-                    Manage Rooms
+        <div className="admin-page p-8">
+            <div ></div>
+            <h1 className="text-3xl font-bold mb-6">Welcome back, {adminName} 👋</h1>
+
+            <div className="grid grid-cols-2 gap-6">
+                <button onClick={() => navigate('/admin/manage-rooms')} className="btn-admin">
+                    🏨 Manage Rooms
                 </button>
-                <button className="admin-button" onClick={() => navigate('/admin/manage-bookings')}>
-                    Manage Bookings
+                <button onClick={() => navigate('/admin/manage-bookings')} className="btn-admin">
+                    📅 Manage Bookings
                 </button>
+                <button onClick={() => navigate('/admin/manage-users')} className="btn-admin">
+                    👤 Manage Users
+                </button>
+
             </div>
         </div>
     );
-}
+};
 
 export default AdminPage;

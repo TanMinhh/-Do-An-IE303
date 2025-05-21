@@ -23,10 +23,13 @@ public class User implements UserDetails {
     @NotBlank(message = "Email is required!")
     @Column(unique = true)
     private String email;
+
     @NotBlank(message = "Name is required!")
     private String name;
+
     @NotBlank(message = "Phone number is required!")
     private String phoneNumber;
+
     @NotBlank(message = "Password is required!")
     private String password;
     private String role;
@@ -36,11 +39,13 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override
     public String getUsername() {
+
         return email;
     }
 
@@ -51,16 +56,19 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+
         return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
+
         return true;
     }
 
     @Override
     public boolean isEnabled() {
+
         return true;
     }
 }
