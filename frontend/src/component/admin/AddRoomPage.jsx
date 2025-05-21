@@ -100,7 +100,7 @@ const AddRoomPage = () => {
     };
 
     return (
-    <div className="edit-room-container">
+    <div className=" ">
       <h2>Add New Room</h2>
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-message">{success}</p>}
