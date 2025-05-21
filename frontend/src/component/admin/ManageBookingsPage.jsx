@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 import Pagination from '../common/Pagination';
-
+import './ManageBookingsPage.css'
 const ManageBookingsPage = () => {
     const [bookings, setBookings] = useState([]);
     const [filteredBookings, setFilteredBookings] = useState([]);
@@ -66,20 +66,25 @@ const ManageBookingsPage = () => {
             </div>
 
             <div className="booking-results">
-                {currentBookings.map((booking) => (
-                    <div key={booking.id} className="booking-result-item">
-                        <p><strong>Booking Code:</strong> {booking.bookingConfirmationCode}</p>
-                        <p><strong>Check In Date:</strong> {booking.checkInDate}</p>
-                        <p><strong>Check out Date:</strong> {booking.checkOutDate}</p>
-                        <p><strong>Total Guests:</strong> {booking.totalNumOfGuest}</p>
-                        <button
-                            className="edit-room-button"
-                            onClick={() => navigate(`/admin/edit-booking/${booking.bookingConfirmationCode}`)}
-                        >Manage Booking</button>
-                    </div>
-                ))}
-            </div>
-
+  {currentBookings.length === 0 ? (
+    <p style={{ gridColumn: '1/-1', textAlign: 'center', color: '#6b7280', fontWeight: '600', padding: '20px' }}>
+      No bookings found
+    </p>
+  ) : (
+    currentBookings.map((booking) => (
+      <div key={booking.id} className="booking-result-item">
+        <p><strong>Booking Code:</strong> {booking.bookingConfirmationCode}</p>
+        <p><strong>Check In Date:</strong> {booking.checkInDate}</p>
+        <p><strong>Check out Date:</strong> {booking.checkOutDate}</p>
+        <p><strong>Total Guests:</strong> {booking.totalNumOfGuest}</p>
+        <button
+          className="edit-room-button"
+          onClick={() => navigate(`/admin/edit-booking/${booking.bookingConfirmationCode}`)}
+        >Manage Booking</button>
+      </div>
+    ))
+  )}
+</div>
             <Pagination
                 roomsPerPage={bookingsPerPage}
                 totalRooms={filteredBookings.length}

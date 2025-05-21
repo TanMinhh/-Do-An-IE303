@@ -32,9 +32,8 @@ const AddRoomPage = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Kiểm tra nếu input giá, bắt chỉ nhập số (có thể decimal)
         if (name === 'roomPrice' && value && !/^\d*\.?\d*$/.test(value)) {
-            return; // chặn nhập ký tự không phải số
+            return;
         }
 
         setRoomDetails(prevState => ({
@@ -71,7 +70,6 @@ const AddRoomPage = () => {
             return;
         }
 
-        // Confirm kiểu Gen Z
         if (!window.confirm('Yo! Are you sure you wanna add this fresh new room? 😎')) {
             return;
         }
