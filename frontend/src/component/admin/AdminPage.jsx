@@ -25,7 +25,7 @@ const AdminPage = () => {
     // };
 
     return (
-        <div className="admin-page p-8">
+        <div className="admin-page ">
             <div ></div>
             <h1 className="text-3xl font-bold mb-6">Welcome back, {adminName} 👋</h1>
 

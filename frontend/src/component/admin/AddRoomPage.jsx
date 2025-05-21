@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
-
-
+import './AddRoomPage.css'
 const AddRoomPage = () => {
     const navigate = useNavigate();
     const [roomDetails, setRoomDetails] = useState({
@@ -18,7 +17,6 @@ const AddRoomPage = () => {
     const [roomTypes, setRoomTypes] = useState([]);
     const [newRoomType, setNewRoomType] = useState(false);
 
-
     useEffect(() => {
         const fetchRoomTypes = async () => {
             try {
@@ -31,16 +29,19 @@ const AddRoomPage = () => {
         fetchRoomTypes();
     }, []);
 
-
-
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Kiểm tra nếu input giá, bắt chỉ nhập số (có thể decimal)
+        if (name === 'roomPrice' && value && !/^\d*\.?\d*$/.test(value)) {
+            return; // chặn nhập ký tự không phải số
+        }
+
         setRoomDetails(prevState => ({
             ...prevState,
             [name]: value,
         }));
     };
-
 
     const handleRoomTypeChange = (e) => {
         if (e.target.value === 'new') {
@@ -51,7 +52,6 @@ const AddRoomPage = () => {
             setRoomDetails(prevState => ({ ...prevState, roomType: e.target.value }));
         }
     };
-
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -64,16 +64,16 @@ const AddRoomPage = () => {
         }
     };
 
-
     const addRoom = async () => {
         if (!roomDetails.roomType || !roomDetails.roomPrice || !roomDetails.roomDescription) {
-            setError('All room details must be provided.');
-            setTimeout(() => setError(''), 5000);
+            setError('All room details must be provided, bro!');
+            setTimeout(() => setError(''), 4000);
             return;
         }
 
-        if (!window.confirm('Do you want to add this room?')) {
-            return
+        // Confirm kiểu Gen Z
+        if (!window.confirm('Yo! Are you sure you wanna add this fresh new room? 😎')) {
+            return;
         }
 
         try {
@@ -88,8 +88,8 @@ const AddRoomPage = () => {
 
             const result = await ApiService.addRoom(formData);
             if (result.statusCode === 200) {
-                setSuccess('Room Added successfully.');
-                
+                setSuccess('Room added successfully! 🎉');
+
                 setTimeout(() => {
                     setSuccess('');
                     navigate('/admin/manage-rooms');
@@ -97,67 +97,73 @@ const AddRoomPage = () => {
             }
         } catch (error) {
             setError(error.response?.data?.message || error.message);
-            setTimeout(() => setError(''), 5000);
+            setTimeout(() => setError(''), 4000);
         }
     };
 
     return (
-        <div className="edit-room-container">
-            <h2>Add New Room</h2>
-            {error && <p className="error-message">{error}</p>}
-            {success && <p className="success-message">{success}</p>}
-            <div className="edit-room-form">
-                <div className="form-group">
-                    {preview && (
-                        <img src={preview} alt="Room Preview" className="room-photo-preview" />
-                    )}
-                    <input
-                        type="file"
-                        name="roomPhoto"
-                        onChange={handleFileChange}
-                    />
-                </div>
+    <div className="edit-room-container">
+      <h2>Add New Room</h2>
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
 
-                <div className="form-group">
-                    <label>Room Type</label>
-                    <select value={roomDetails.roomType} onChange={handleRoomTypeChange}>
-                        <option value="">Select a room type</option>
-                        {roomTypes.map(type => (
-                            <option key={type} value={type}>{type}</option>
-                        ))}
-                        <option value="new">Other (please specify)</option>
-                    </select>
-                    {newRoomType && (
-                        <input
-                            type="text"
-                            name="roomType"
-                            placeholder="Enter new room type"
-                            value={roomDetails.roomType}
-                            onChange={handleChange}
-                        />
-                    )}
-                </div>
-                <div className="form-group">
-                    <label>Room Price</label>
-                    <input
-                        type="text"
-                        name="roomPrice"
-                        value={roomDetails.roomPrice}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Room Description</label>
-                    <textarea
-                        name="roomDescription"
-                        value={roomDetails.roomDescription}
-                        onChange={handleChange}
-                    ></textarea>
-                </div>
-                <button className="update-button" onClick={addRoom}>Add Room</button>
-            </div>
+      <div className="edit-room-form">
+        <div className="form-group">
+          {preview && (
+            <img src={preview} alt="Room Preview" className="room-photo-preview" />
+          )}
+          <input type="file" name="roomPhoto" onChange={handleFileChange} />
         </div>
-    );
+
+        <div className="form-group">
+          <label>Room Type</label>
+          <select value={roomDetails.roomType} onChange={handleRoomTypeChange}>
+            <option value="">Select a room type</option>
+            {roomTypes.map(type => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+            <option value="new">Other (please specify)</option>
+          </select>
+          {newRoomType && (
+            <input
+              type="text"
+              name="roomType"
+              placeholder="Enter new room type"
+              value={roomDetails.roomType}
+              onChange={handleChange}
+            />
+          )}
+        </div>
+
+        <div className="form-group">
+          <label>Room Price (VNĐ)</label>
+          <input
+            type="text"
+            name="roomPrice"
+            value={roomDetails.roomPrice}
+            onChange={handleChange}
+            placeholder="Example: 1500000"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Room Description</label>
+          <textarea
+            name="roomDescription"
+            value={roomDetails.roomDescription}
+            onChange={handleChange}
+            placeholder="Write something cool about the room..."
+            rows="4"
+          ></textarea>
+        </div>
+
+        <button className="update-button" onClick={addRoom}>
+          Add Room
+        </button>
+      </div>
+    </div>
+  );
+
 };
 
 export default AddRoomPage;
