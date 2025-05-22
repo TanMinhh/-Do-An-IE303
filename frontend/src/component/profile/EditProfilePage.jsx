@@ -41,7 +41,6 @@ const EditProfilePage = () => {
                     <p><strong>Name:</strong> {user.name}</p>
                     <p><strong>Email:</strong> {user.email}</p>
                     <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
-                    <button className="delete-profile-button" onClick={handleDeleteProfile}>Delete Profile</button>
                 </div>
             )}
         </div>
