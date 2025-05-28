@@ -1,0 +1,95 @@
+.bookings-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bookings-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.search-div label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  margin-right: 650px ;
+}
+.search-div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.search-div label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+.search-div input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.search-div input:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+.booking-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 20px;
+}
+
+.booking-result-item {
+  background: white;
+  padding: 20px 25px;
+  border-radius: 14px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  transition: box-shadow 0.3s ease;
+}
+
+.booking-result-item:hover {
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+.booking-result-item p {
+  margin: 8px 0;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.booking-result-item strong {
+  color: #111827;
+}
+
+.edit-room-button {
+  margin-top: 15px;
+  padding: 10px 16px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.edit-room-button:hover {
+  background-color: #1d4ed8;
+}

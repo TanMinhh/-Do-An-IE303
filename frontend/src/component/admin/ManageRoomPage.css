@@ -1,0 +1,66 @@
+.all-rooms {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.all-rooms h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 700;
+}
+
+.all-room-filter-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-select-div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-left: 100px;
+}
+
+.filter-select-div label {
+  font-weight: 600;
+  min-width: 140px;
+  color: #444;
+
+}
+
+.filter-select-div select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.filter-select-div select:hover,
+.filter-select-div select:focus {
+  outline: none;
+}
+
+.add-room-button {
+  padding: 8px 18px;
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 100px;
+}
+
+.add-room-button:hover {
+  background-color: #0056b3;
+}
