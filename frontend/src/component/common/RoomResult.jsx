@@ -14,7 +14,7 @@ const RoomResult = ({ roomSearchResults }) => {
                             <img className='room-list-item-image' src={room.roomPhotoUrl} alt={room.roomType} />
                             <div className="room-details">
                                 <h3>{room.roomType}</h3>
-                                <p>Price: ${room.roomPrice} / night</p>
+                                <p>Price: {room.roomPrice.toLocaleString('vi-VN')} VND / night</p>
                                 <p>Description: {room.roomDescription}</p>
                             </div>
 

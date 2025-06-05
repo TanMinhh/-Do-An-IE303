@@ -25,15 +25,15 @@ const EditBookingPage = () => {
     }, [bookingCode]);
 
 
-    const acheiveBooking = async (bookingId) => {
-        if (!window.confirm('Are you sure you want to Acheive this booking?')) {
+    const achieveBooking = async (bookingId) => {
+        if (!window.confirm('Are you sure you want to Achieve this booking?')) {
             return; // Do nothing if the user cancels
         }
 
         try {
             const response = await ApiService.cancelBooking(bookingId);
             if (response.statusCode === 200) {
-                setSuccessMessage("The boking was Successfully Acheived")
+                setSuccessMessage("The booking was successfully Achieved")
                 
                 setTimeout(() => {
                     setSuccessMessage('');
@@ -64,7 +64,7 @@ const EditBookingPage = () => {
                     <br />
                     <hr />
                     <br />
-                    <h3>Booker Detials</h3>
+                    <h3>Booker Details</h3>
                     <div>
                         <p> Name: {bookingDetails.user.name}</p>
                         <p> Email: {bookingDetails.user.email}</p>
@@ -77,13 +77,13 @@ const EditBookingPage = () => {
                     <h3>Room Details</h3>
                     <div>
                         <p> Room Type: {bookingDetails.room.roomType}</p>
-                        <p> Room Price: ${bookingDetails.room.roomPrice}</p>
+                        <p> Room Price: {bookingDetails.room.roomPrice.toLocaleString('vi-VN')} VND</p>
                         <p> Room Description: {bookingDetails.room.roomDescription}</p>
                         <img src={bookingDetails.room.roomPhotoUrl} alt="" sizes="" srcSet="" />
                     </div>
                     <button
-                        className="acheive-booking"
-                        onClick={() => acheiveBooking(bookingDetails.id)}>Acheive Booking
+                        className="achieve-booking"
+                        onClick={() => achieveBooking(bookingDetails.id)}>Achieve Booking
                     </button>
                 </div>
             )}

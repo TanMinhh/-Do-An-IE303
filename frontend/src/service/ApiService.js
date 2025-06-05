@@ -189,4 +189,10 @@ export default class ApiService {
         const role = localStorage.getItem('role')
         return role === 'USER'
     }
+
+    /* This creates a MoMo payment */
+    static async createMoMoPayment(amount) {
+        const result = await axios.post(`${this.BASE_URL}/api/momo/create?amount=${amount}`)
+        return result.data
+    }
 }

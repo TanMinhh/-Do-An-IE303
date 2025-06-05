@@ -138,12 +138,13 @@ const AddRoomPage = () => {
                     )}
                 </div>
                 <div className="form-group">
-                    <label>Room Price</label>
+                    <label>Room Price (VND)</label>
                     <input
                         type="text"
                         name="roomPrice"
                         value={roomDetails.roomPrice}
                         onChange={handleChange}
+                        placeholder="Enter price in VND"
                     />
                 </div>
                 <div className="form-group">
