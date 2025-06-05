@@ -1,6 +1,5 @@
 package com.project.hotelXpress.service;
 
-
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
@@ -20,10 +19,10 @@ public class AwsS3Service {
 
     private final String bucketName = "hotelxpress-images";
 
-    @Value("${aws.s3.access.key}")
+    @Value("AKIAS4KADJBYBHJFPX6M")
     private String awsS3AccessKey;
 
-    @Value("${aws.s3.secret-key}")
+    @Value("UgS2lYW8CxmZmtZ4GT1pKkg7zPpuGixk/cK/v0Wo")
     private String awsS3SecretKey;
 
     public String saveImageToS3(MultipartFile photo) {

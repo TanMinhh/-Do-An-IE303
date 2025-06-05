@@ -1,0 +1,54 @@
+.edit-profile-page {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.edit-profile-page h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 28px;
+}
+
+.profile-details p {
+    font-size: 16px;
+    margin: 12px 0;
+    line-height: 1.5;
+}
+
+.profile-details strong {
+    color: #555;
+}
+
+.delete-profile-button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 12px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.delete-profile-button:hover {
+    background-color: #c0392b;
+}
+
+.error-message {
+    background-color: #ffe6e6;
+    color: #e74c3c;
+    padding: 10px 15px;
+    border: 1px solid #e0b4b4;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-align: center;
+}
