@@ -111,18 +111,17 @@ const RoomDetailsPage = () => {
           setShowMessage(false);
           navigate('/rooms'); // Navigate to rooms
         }, 10000);
+        // First create MoMo payment
+        const momoResponse = await ApiService.createMoMoPayment(totalPrice);
+        if (momoResponse && momoResponse.payUrl) {
+          // Redirect to MoMo payment page
+          window.location.href = momoResponse.payUrl;
+          return;
+    }
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.message || error.message);
       setTimeout(() => setErrorMessage(''), 5000); // Clear error message after 5 seconds
-    }
-
-    // First create MoMo payment
-    const momoResponse = await ApiService.createMoMoPayment(totalPrice);
-    if (momoResponse && momoResponse.payUrl) {
-      // Redirect to MoMo payment page
-      window.location.href = momoResponse.payUrl;
-      return;
     }
   };
 
@@ -186,6 +185,7 @@ const RoomDetailsPage = () => {
               selectsStart
               startDate={checkInDate}
               endDate={checkOutDate}
+              minDate={new Date()}
               placeholderText="Check-in Date"
               dateFormat="dd/MM/yyyy"
             />
@@ -196,7 +196,7 @@ const RoomDetailsPage = () => {
               selectsEnd
               startDate={checkInDate}
               endDate={checkOutDate}
-              minDate={checkInDate}
+              minDate={checkInDate || new Date()}
               placeholderText="Check-out Date"
               dateFormat="dd/MM/yyyy"
             />

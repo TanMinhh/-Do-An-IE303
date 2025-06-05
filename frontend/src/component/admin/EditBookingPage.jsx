@@ -59,7 +59,7 @@ const EditBookingPage = () => {
                     <p>Check-out Date: {bookingDetails.checkOutDate}</p>
                     <p>Num Of Adults: {bookingDetails.numOfAdults}</p>
                     <p>Num Of Children: {bookingDetails.numOfChildren}</p>
-                    <p>Guest Email: {bookingDetails.guestEmail}</p>
+                    <p>Guest Email: {bookingDetails.user.email}</p>
 
                     <br />
                     <hr />

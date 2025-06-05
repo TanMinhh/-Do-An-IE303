@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -38,6 +39,9 @@ public class BookingService implements IBookingService {
         Response response = new Response();
 
         try {
+            if (bookingRequest.getCheckInDate().isBefore(LocalDate.now())) {
+                throw new IllegalArgumentException("Cannot book a room for a past date");
+            }
             if (bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())) {
                 throw new IllegalArgumentException("Check in date must be after check out date");
             }
