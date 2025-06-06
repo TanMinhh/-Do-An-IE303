@@ -168,6 +168,22 @@ export default class ApiService {
         return result.data
     }
 
+    /* This updates a payment status for a booking */
+    static async updatePaymentStatus(bookingId, status) {
+        try {
+            const result = await axios.patch(
+                `${this.BASE_URL}/bookings/update-payment-status/${bookingId}?status=${status}`,
+                {},
+                {
+                    headers: this.getHeader()
+                }
+            );
+            return result.data;
+        } catch (error) {
+            console.error('Error updating payment status:', error);
+            throw error;
+        }
+    }
 
     /**AUTHENTICATION CHECKER */
     static logout() {

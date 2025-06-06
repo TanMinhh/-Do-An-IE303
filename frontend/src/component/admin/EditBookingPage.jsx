@@ -60,6 +60,46 @@ const EditBookingPage = () => {
                     <p>Num Of Adults: {bookingDetails.numOfAdults}</p>
                     <p>Num Of Children: {bookingDetails.numOfChildren}</p>
                     <p>Guest Email: {bookingDetails.user.email}</p>
+                    <p><strong>Payment Status:</strong> {bookingDetails.paymentStatus || 'PENDING'}</p>
+                    <div style={{ margin: '10px 0' }}>
+                        <button onClick={async () => {
+                            try {
+                                await ApiService.updatePaymentStatus(bookingDetails.id, 'PAID');
+                                setSuccessMessage('Payment status set to PAID');
+                                setTimeout(() => setSuccessMessage(''), 2000);
+                                // Refresh booking details
+                                const response = await ApiService.getBookingByConfirmationCode(bookingCode);
+                                setBookingDetails(response.booking);
+                            } catch (error) {
+                                setError(error.response?.data?.message || 'Failed to update payment status. Please try again.');
+                                setTimeout(() => setError(''), 5000);
+                            }
+                        }}>Set Paid</button>
+                        <button onClick={async () => {
+                            try {
+                                await ApiService.updatePaymentStatus(bookingDetails.id, 'FAILED');
+                                setSuccessMessage('Payment status set to FAILED');
+                                setTimeout(() => setSuccessMessage(''), 2000);
+                                const response = await ApiService.getBookingByConfirmationCode(bookingCode);
+                                setBookingDetails(response.booking);
+                            } catch (error) {
+                                setError(error.response?.data?.message || 'Failed to update payment status. Please try again.');
+                                setTimeout(() => setError(''), 5000);
+                            }
+                        }} style={{ marginLeft: 8 }}>Set Failed</button>
+                        <button onClick={async () => {
+                            try {
+                                await ApiService.updatePaymentStatus(bookingDetails.id, 'PENDING');
+                                setSuccessMessage('Payment status set to PENDING');
+                                setTimeout(() => setSuccessMessage(''), 2000);
+                                const response = await ApiService.getBookingByConfirmationCode(bookingCode);
+                                setBookingDetails(response.booking);
+                            } catch (error) {
+                                setError(error.response?.data?.message || 'Failed to update payment status. Please try again.');
+                                setTimeout(() => setError(''), 5000);
+                            }
+                        }} style={{ marginLeft: 8 }}>Set Pending</button>
+                    </div>
 
                     <br />
                     <hr />

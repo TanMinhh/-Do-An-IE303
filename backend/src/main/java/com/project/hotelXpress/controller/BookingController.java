@@ -41,4 +41,11 @@ public class BookingController {
         Response response = bookingService.cancelBooking(bookingId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
+
+    @PatchMapping("/update-payment-status/{bookingId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Response> updatePaymentStatus(@PathVariable Long bookingId, @RequestParam Booking.PaymentStatus status) {
+        Response response = bookingService.updatePaymentStatus(bookingId, status);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
 }

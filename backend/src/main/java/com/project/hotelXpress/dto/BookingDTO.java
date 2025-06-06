@@ -1,6 +1,7 @@
 package com.project.hotelXpress.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.project.hotelXpress.entity.Booking;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class BookingDTO {
     private int numOfChildren;
     private int totalNumOfGuest;
     private String bookingConfirmationCode;
+    private Booking.PaymentStatus paymentStatus;
 
     private UserDTO user;
     private RoomDTO room;

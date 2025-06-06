@@ -9,4 +9,5 @@ public interface IBookingService {
     Response findBookingByConfirmationCode(String confirmationCode);
     Response getAllBookings();
     Response cancelBooking(Long bookingId);
+    Response updatePaymentStatus(Long bookingId, Booking.PaymentStatus status);
 }
