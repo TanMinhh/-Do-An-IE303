@@ -34,6 +34,9 @@ public class Booking {
     private int totalNumOfGuest;
     private String bookingConfirmationCode;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus = PaymentStatus.PENDING;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,6 +44,12 @@ public class Booking {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
+
+    public enum PaymentStatus {
+        PENDING,
+        PAID,
+        FAILED
+    }
 
     public void calculateTotalNumOfGuest() {
         this.totalNumOfGuest = this.numOfAdults + this.numOfChildren;
@@ -66,6 +75,7 @@ public class Booking {
                 ", numOfChildren=" + numOfChildren +
                 ", totalNumOfGuest=" + totalNumOfGuest +
                 ", bookingConfirmationCode='" + bookingConfirmationCode + '\'' +
+                ", paymentStatus='" + paymentStatus + '\'' +
                 '}';
     }
 }

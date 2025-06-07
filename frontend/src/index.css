@@ -158,7 +158,7 @@ button[type="submit"]:hover {
 
 /**NAV BAR STYLING END HERE*/
 
-/* FOOTER STYKLING */
+/* FOOTER STYLING */
 .my-footer {
     color: #f0e8e8;
     background-color: #444;
@@ -467,7 +467,7 @@ button[type="submit"]:hover {
 
 /*ALL ROOMS PAGE STYLING ENDS*/
 
-/*PAGINATION COMPONENT STYLIMNG STARTS HERE*/
+/*PAGINATION COMPONENT STYLING STARTS HERE*/
 
 
 .pagination-nav {
@@ -565,9 +565,30 @@ button[type="submit"]:hover {
 }
 
 .booking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
     margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
+}
+
+.booking-item-info{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-right: 10px;
+}
+
+.booking-item-image{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .booking-number {
@@ -774,7 +795,7 @@ p {
     opacity: 0.8;
 }
 
-/*EDIT ROOMPAGE STYLING*/
+/*EDIT ROOM PAGE STYLING*/
 
 .edit-room-container {
     max-width: 600px;
@@ -956,7 +977,7 @@ h2 {
 /*Edit Booking*/
 
 
-.acheive-booking {
+.achieve-booking {
     margin: 10px auto;
     background-color: rgb(164, 16, 16);
     color: #fff;
@@ -964,7 +985,7 @@ h2 {
     font-weight: 800;
 }
 
-.acheive-booking:hover {
+.achieve-booking:hover {
     background-color: rgb(79, 14, 14);
 }
 

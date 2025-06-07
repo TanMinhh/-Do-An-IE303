@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -38,6 +39,9 @@ public class BookingService implements IBookingService {
         Response response = new Response();
 
         try {
+            if (bookingRequest.getCheckInDate().isBefore(LocalDate.now())) {
+                throw new IllegalArgumentException("Cannot book a room for a past date");
+            }
             if (bookingRequest.getCheckOutDate().isBefore(bookingRequest.getCheckInDate())) {
                 throw new IllegalArgumentException("Check in date must be after check out date");
             }
@@ -126,6 +130,26 @@ public class BookingService implements IBookingService {
         } catch (Exception e){
             response.setStatusCode(500);
             response.setMessage("Error canceling all booking: " + e.getMessage());
+        }
+        return response;
+    }
+
+    @Override
+    public Response updatePaymentStatus(Long bookingId, Booking.PaymentStatus status) {
+        Response response = new Response();
+        try {
+            Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new OurException("Booking not found"));
+            booking.setPaymentStatus(status);
+            bookingRepository.save(booking);
+            response.setStatusCode(200);
+            response.setMessage("Payment status updated successfully");
+        } catch (OurException e) {
+            response.setStatusCode(404);
+            response.setMessage(e.getMessage());
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error updating payment status: " + e.getMessage());
         }
         return response;
     }

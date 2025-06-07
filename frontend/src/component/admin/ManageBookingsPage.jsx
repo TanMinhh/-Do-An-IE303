@@ -59,7 +59,7 @@ const ManageBookingsPage = () => {
         <div className='bookings-container'>
             <h2>All Bookings</h2>
             <div className='search-div'>
-                <label>Filter by Booking Number:</label>
+                <label>Filter by Booking Code:</label>
                 <input
                     type="text"
                     value={searchTerm}

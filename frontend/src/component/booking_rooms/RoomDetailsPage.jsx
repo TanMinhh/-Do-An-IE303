@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService'; // Assuming your service is in a file called ApiService.js
 import DatePicker from 'react-datepicker';
+import './RoomDetailsPage.css';
 // import 'react-datepicker/dist/react-datepicker.css';
 
 const RoomDetailsPage = () => {
@@ -74,7 +75,6 @@ const RoomDetailsPage = () => {
 
   const acceptBooking = async () => {
     try {
-
       // Ensure checkInDate and checkOutDate are Date objects
       const startDate = new Date(checkInDate);
       const endDate = new Date(checkOutDate);
@@ -86,7 +86,6 @@ const RoomDetailsPage = () => {
       // Convert dates to YYYY-MM-DD format, adjusting for time zone differences
       const formattedCheckInDate = new Date(startDate.getTime() - (startDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
       const formattedCheckOutDate = new Date(endDate.getTime() - (endDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-
 
       // Log the original dates for debugging
       console.log("Formated Check-in Date:", formattedCheckInDate);
@@ -112,6 +111,13 @@ const RoomDetailsPage = () => {
           setShowMessage(false);
           navigate('/rooms'); // Navigate to rooms
         }, 10000);
+        // First create MoMo payment
+        const momoResponse = await ApiService.createMoMoPayment(totalPrice);
+        if (momoResponse && momoResponse.payUrl) {
+          // Redirect to MoMo payment page
+          window.location.href = momoResponse.payUrl;
+          return;
+    }
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.message || error.message);
@@ -150,7 +156,7 @@ const RoomDetailsPage = () => {
       <img src={roomPhotoUrl} alt={roomType} className="room-details-image" />
       <div className="room-details-info">
         <h3>{roomType}</h3>
-        <p>Price: ${roomPrice} / night</p>
+        <p>Price: {roomPrice.toLocaleString('vi-VN')} VND / night</p>
         <p>{description}</p>
       </div>
       {bookings && bookings.length > 0 && (
@@ -179,9 +185,9 @@ const RoomDetailsPage = () => {
               selectsStart
               startDate={checkInDate}
               endDate={checkOutDate}
+              minDate={new Date()}
               placeholderText="Check-in Date"
               dateFormat="dd/MM/yyyy"
-              // dateFormat="yyyy-MM-dd"
             />
             <DatePicker
               className="detail-search-field"
@@ -190,9 +196,8 @@ const RoomDetailsPage = () => {
               selectsEnd
               startDate={checkInDate}
               endDate={checkOutDate}
-              minDate={checkInDate}
+              minDate={checkInDate || new Date()}
               placeholderText="Check-out Date"
-              // dateFormat="yyyy-MM-dd"
               dateFormat="dd/MM/yyyy"
             />
 
@@ -221,7 +226,7 @@ const RoomDetailsPage = () => {
         )}
         {totalPrice > 0 && (
           <div className="total-price">
-            <p>Total Price: ${totalPrice}</p>
+            <p>Total Price: {totalPrice.toLocaleString('vi-VN')} VND</p>
             <p>Total Guests: {totalGuests}</p>
             <button onClick={acceptBooking} className="accept-booking">Accept Booking</button>
           </div>

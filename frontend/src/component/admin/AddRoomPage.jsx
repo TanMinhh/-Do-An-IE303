@@ -105,12 +105,54 @@ const AddRoomPage = () => {
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-message">{success}</p>}
 
+<<<<<<< HEAD
       <div className="edit-room-form">
         <div className="form-group">
           {preview && (
             <img src={preview} alt="Room Preview" className="room-photo-preview" />
           )}
           <input type="file" name="roomPhoto" onChange={handleFileChange} />
+=======
+                <div className="form-group">
+                    <label>Room Type</label>
+                    <select value={roomDetails.roomType} onChange={handleRoomTypeChange}>
+                        <option value="">Select a room type</option>
+                        {roomTypes.map(type => (
+                            <option key={type} value={type}>{type}</option>
+                        ))}
+                        <option value="new">Other (please specify)</option>
+                    </select>
+                    {newRoomType && (
+                        <input
+                            type="text"
+                            name="roomType"
+                            placeholder="Enter new room type"
+                            value={roomDetails.roomType}
+                            onChange={handleChange}
+                        />
+                    )}
+                </div>
+                <div className="form-group">
+                    <label>Room Price (VND)</label>
+                    <input
+                        type="text"
+                        name="roomPrice"
+                        value={roomDetails.roomPrice}
+                        onChange={handleChange}
+                        placeholder="Enter price in VND"
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Room Description</label>
+                    <textarea
+                        name="roomDescription"
+                        value={roomDetails.roomDescription}
+                        onChange={handleChange}
+                    ></textarea>
+                </div>
+                <button className="update-button" onClick={addRoom}>Add Room</button>
+            </div>
+>>>>>>> 7e2bb968b6fbf382d4072bd8fc6f0c5e1d979816
         </div>
 
         <div className="form-group">

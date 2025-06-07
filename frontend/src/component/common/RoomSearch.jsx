@@ -66,6 +66,7 @@ const RoomSearch = ({ handleSearchResult }) => {
             selected={startDate}
             onChange={(date) => setStartDate(date)}
             dateFormat="dd/MM/yyyy"
+            minDate={new Date()}
             placeholderText="Select Check-in Date"
           />
         </div>
@@ -75,6 +76,7 @@ const RoomSearch = ({ handleSearchResult }) => {
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             dateFormat="dd/MM/yyyy"
+            minDate={startDate || new Date()}
             placeholderText="Select Check-out Date"
           />
         </div>
