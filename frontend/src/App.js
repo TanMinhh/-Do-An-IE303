@@ -18,7 +18,12 @@ import ProfilePage from './component/profile/ProfilePage';
 import EditProfilePage from './component/profile/EditProfilePage';
 import { ProtectedRoute, AdminRoute } from './service/guard';
 import ManageUsersPage from './component/admin/ManageUserPage';
+import ChatbotTest from './component/chat/chatbot';
+import ChatbotBubble from './component/chat/Bubble';
+import ChatbotPopup from "./component/chat/chat";
 function App() {
+  const [showChatbot, setShowChatbot] = React.useState(false);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -63,13 +68,18 @@ function App() {
               element={<AdminRoute element={<EditBookingPage />} />}
             />
             <Route path="/admin/manage-users"
-  element={<AdminRoute element={<ManageUsersPage />} />}
-/>
+              element={<AdminRoute element={<ManageUsersPage />} />}
+            />
             {/* Fallback Route */}
             <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="/chatbot-test" element={<ProtectedRoute element={<ChatbotTest />} />} />
           </Routes>
+
+
         </div>
         <FooterComponent />
+        <ChatbotBubble onClick={() => setShowChatbot(true)} />
+        {showChatbot && <ChatbotPopup onClose={() => setShowChatbot(false)} />}
       </div>
     </BrowserRouter>
   );
