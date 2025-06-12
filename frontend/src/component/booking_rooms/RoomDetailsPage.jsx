@@ -22,6 +22,7 @@ const RoomDetailsPage = () => {
   const [showMessage, setShowMessage] = useState(false); // State variable to control message visibility
   const [confirmationCode, setConfirmationCode] = useState(''); // State variable for booking confirmation code
   const [errorMessage, setErrorMessage] = useState(''); // State variable for error message
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,22 +107,35 @@ const RoomDetailsPage = () => {
       if (response.statusCode === 200) {
         setConfirmationCode(response.bookingConfirmationCode); // Set booking confirmation code
         setShowMessage(true); // Show message
-        // Hide message and navigate to homepage after 5 seconds
-        setTimeout(() => {
-          setShowMessage(false);
-          navigate('/rooms'); // Navigate to rooms
-        }, 10000);
-        // First create MoMo payment
-        const momoResponse = await ApiService.createMoMoPayment(totalPrice);
-        if (momoResponse && momoResponse.payUrl) {
-          // Redirect to MoMo payment page
-          window.location.href = momoResponse.payUrl;
-          return;
-    }
+        setShowPaymentOptions(true); // Show payment options
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.message || error.message);
       setTimeout(() => setErrorMessage(''), 5000); // Clear error message after 5 seconds
+    }
+  };
+
+  const handleMoMoPayment = async () => {
+    try {
+      const momoResponse = await ApiService.createMoMoPayment(totalPrice);
+      if (momoResponse && momoResponse.payUrl) {
+        window.location.href = momoResponse.payUrl;
+      }
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || error.message);
+      setTimeout(() => setErrorMessage(''), 5000);
+    }
+  };
+
+  const handleVNPayPayment = async () => {
+    try {
+      const vnpayResponse = await ApiService.createVNPayPayment(totalPrice);
+      if (vnpayResponse && vnpayResponse.paymentUrl) {
+        window.location.href = vnpayResponse.paymentUrl;
+      }
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || error.message);
+      setTimeout(() => setErrorMessage(''), 5000);
     }
   };
 
@@ -232,6 +246,19 @@ const RoomDetailsPage = () => {
           </div>
         )}
       </div>
+      {showPaymentOptions && (
+        <div className="payment-options">
+          <h3>Select Payment Method</h3>
+          <div className="payment-buttons">
+            <button onClick={handleMoMoPayment} className="payment-button momo">
+              Pay with MoMo
+            </button>
+            <button onClick={handleVNPayPayment} className="payment-button vnpay">
+              Pay with VNPay
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -211,4 +211,9 @@ export default class ApiService {
         const result = await axios.post(`${this.BASE_URL}/api/momo/create?amount=${amount}`)
         return result.data
     }
+
+    static async createVNPayPayment(amount) {
+        const result = await axios.get(`${this.BASE_URL}/payment/vn-pay?amount=${amount}`)
+        return result.data.data
+    }
 }

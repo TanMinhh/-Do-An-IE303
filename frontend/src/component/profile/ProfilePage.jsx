@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 import './ProfilePage.css';
 
@@ -8,6 +8,7 @@ const ProfilePage = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -22,7 +23,24 @@ const ProfilePage = () => {
         };
 
         fetchUserProfile();
-    }, []);
+
+        // Check for payment status in URL
+        const searchParams = new URLSearchParams(location.search);
+        const paymentStatus = searchParams.get('payment_status');
+        
+        if (paymentStatus) {
+            if (paymentStatus === 'success') {
+                setSuccess('Payment successful! Your booking has been confirmed.');
+            } else if (paymentStatus === 'failed') {
+                setError('Payment failed. Please try again.');
+            } else if (paymentStatus === 'error') {
+                setError('An error occurred during payment. Please contact support.');
+            }
+            
+            // Remove the payment_status from URL
+            window.history.replaceState({}, document.title, '/profile');
+        }
+    }, [location]);
 
     const handleLogout = () => {
         ApiService.logout();

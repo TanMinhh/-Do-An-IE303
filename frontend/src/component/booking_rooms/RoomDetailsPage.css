@@ -464,3 +464,52 @@
         justify-content: space-between;
     }
 }
+
+.payment-options {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-options h3 {
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.payment-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.payment-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-button.momo {
+  background-color: #A50064;
+  color: white;
+}
+
+.payment-button.vnpay {
+  background-color: #0055A4;
+  color: white;
+}
+
+.payment-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.payment-button:active {
+  transform: translateY(0);
+}

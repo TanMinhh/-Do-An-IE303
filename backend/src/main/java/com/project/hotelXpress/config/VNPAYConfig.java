@@ -15,6 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 @Configuration
 public class VNPAYConfig {
+
     @Getter
     @Value("https://sandbox.vnpayment.vn/paymentv2/vpcpay.html")
     private String vnp_PayUrl;

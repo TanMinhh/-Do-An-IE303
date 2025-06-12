@@ -230,12 +230,12 @@ button[type="submit"]:hover {
 
 .search-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
+    flex-wrap: nowrap;
+    justify-content: center;
     align-items: center;
     margin-bottom: 10px;
-    padding: 20px;
-    margin-left: 45px;
+    padding: 0px;
+    margin-left: 0px;
 }
 
 
@@ -1178,10 +1178,6 @@ h2 {
 
     .all-room-filter-div {
         margin: 0px;
-    }
-
-    .search-container {
-        display: block;
     }
 
     .service-section {
